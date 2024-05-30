@@ -1,0 +1,38 @@
+services:
+  mysql:
+    image: mariadb
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: django_mysql_db
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: mysql_password
+      TZ: 'Asia/Tokyo'
+    volumes:
+    - ./data/data:/var/lib/mysql
+    ports:
+    - 3306:3306
+
+  web:
+    build: .
+    container_name: django_app
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+        - mysql
+    ports:
+        - 8888:80
+    environment:
+        PMA_USER: mysql_user
+        PMA_PASSWORD: mysql_password
+        PMA_HOST: mysql
+volumes:
+  data:

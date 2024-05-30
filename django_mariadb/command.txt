@@ -1,0 +1,29 @@
+不要なファイル削除
+docker-compose build
+docker-compose run web django-admin startproject myproject .
+
+docker-compose up -d mysql
+sleep 5
+docker-compose up -d phpmyadmin
+docker-compose up -d web
+pwd
+
+docker-compose down
+
+# setting.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_mysql_db',
+        'USER': 'mysql_user',
+        'PASSWORD': 'mysql_password',
+        'HOST': 'mysql',
+        'PORT': '3306'
+    }
+}
+
+docker exec -it django_app bash 
+python manage.py migrate
+python manage.py startapp myaplication
+pwd
+

@@ -1,0 +1,9 @@
+Django>=4.0
+mysqlclient
+pandas
+openpyxl
+tqdm
+matplotlib
+pypdf
+beautifulsoup4
+selenium

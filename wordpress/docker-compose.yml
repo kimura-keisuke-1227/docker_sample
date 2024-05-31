@@ -3,6 +3,8 @@ services:
   image: mysql
   container_name: mysql8
   restart: always
+  ports:
+     - 8888:8888
   environment:
     MYSQL_ROOT_PASSWORD: password # rootユーザのパスワード
     MYSQL_DATABASE: db_local # WordPress用データベース名

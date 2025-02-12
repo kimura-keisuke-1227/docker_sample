@@ -2,10 +2,7 @@
 docker compose build
 docker compose run web django-admin startproject myproject .
 
-docker-compose up -d mysql
-sleep 5
-docker-compose up -d phpmyadmin
-docker-compose up -d web
+docker compose up -d 
 pwd
 
 docker-compose down

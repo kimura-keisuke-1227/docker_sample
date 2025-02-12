@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mysql:
     image: mariadb
@@ -9,9 +11,13 @@ services:
       MYSQL_PASSWORD: mysql_password
       TZ: 'Asia/Tokyo'
     volumes:
-    - ./data/data:/var/lib/mysql
+      - data:/var/lib/mysql
     ports:
-    - 3306:3306
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-pmysql_password"]
+      retries: 3
+      timeout: 5s
 
   web:
     build: .
@@ -22,17 +28,21 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
     depends_on:
-        - mysql
+      mysql:
+        condition: service_healthy
     ports:
-        - 8888:80
+      - 8888:80
     environment:
-        PMA_USER: mysql_user
-        PMA_PASSWORD: mysql_password
-        PMA_HOST: mysql
+      PMA_USER: mysql_user
+      PMA_PASSWORD: mysql_password
+      PMA_HOST: mysql
+
 volumes:
   data:

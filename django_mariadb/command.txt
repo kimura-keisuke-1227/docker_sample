@@ -1,6 +1,6 @@
 不要なファイル削除
-docker-compose build
-docker-compose run web django-admin startproject myproject .
+docker compose build
+docker compose run web django-admin startproject myproject .
 
 docker-compose up -d mysql
 sleep 5
